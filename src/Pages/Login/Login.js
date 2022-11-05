@@ -1,10 +1,29 @@
+import { GoogleAuthProvider } from 'firebase/auth';
 import React from 'react';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import loginImg from '../../assets/images/login/login.svg';
+import { AuthContext } from '../../Context/AuthProvider/AuthProvider';
 
 const Login = () => {
+
+    const googleProvider = new GoogleAuthProvider();
+
+    const { signInUser, googleLogin } = useContext(AuthContext)
+
     const handleLogin = (e) => {
         e.preventDefault()
+        const form = e.target;
+        const email = form.email.value;
+        const password = form.password.value;
+        console.log(email, password);
+        signInUser(email, password).then(result => {
+            const user = result.user;
+            console.log(user);
+        }).catch(err => console.error(err))
+        form.reset()
+
+
     }
     return (
         <div className="hero w-full">
@@ -36,7 +55,7 @@ const Login = () => {
                             <input className="btn btn-primary" type="submit" value="Login" />
                         </div>
                     </form>
-                    <p className='text-center'>New to Genius Car <Link to={'/'} className='text-orange-600 font-bold'>Sign Up</Link></p>
+                    <p className='text-center'>New to Genius Car <Link to={'/signup'} className='text-orange-600 font-bold'>Sign Up</Link></p>
                 </div>
             </div>
         </div>
