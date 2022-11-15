@@ -11,13 +11,15 @@ const Header = () => {
 
     const handleSignOut = e => {
         e.preventDefault()
-        signOUT()
+        signOUT().then(result => console.log(result)).catch(err => console.error(err))
     }
 
     const menuItem = <>
         <li className='font-semibold'><Link to={'/'}>Home</Link></li>
-        <li className='font-semibold'><Link to={'/login'}>Login</Link></li>
+        { user?.email ? <li className='font-semibold'><Link to={'/orders'}>Orders</Link></li>
+            :
         <li className='font-semibold'><Link to={'/signup'}>Sign Up</Link></li>
+        }
     </>
     return (
 
